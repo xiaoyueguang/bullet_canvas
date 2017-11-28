@@ -1,0 +1,26 @@
+{
+  "name": "bullet_canvas",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "rollup -w --config rollup.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/xiaoyueguang/bullet_canvas.git"
+  },
+  "keywords": [
+    "bullet"
+  ],
+  "author": "Ray",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/xiaoyueguang/bullet_canvas/issues"
+  },
+  "homepage": "https://github.com/xiaoyueguang/bullet_canvas#readme",
+  "devDependencies": {
+    "rollup": "^0.52.0"
+  }
+}
