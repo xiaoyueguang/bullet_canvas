@@ -5,13 +5,93 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>bullet_canvas</title>
+  <style>
+    #app {
+      width: 800px;
+      height: 450px;
+    }
+    canvas {
+      /* background: #d2d2d2; */
+    }
+    input[type='range'] {
+      width: 800px;
+    }
+  </style>
 </head>
 <body>
-  
+  <div id="app"></div>
+  <br />
+  <input id="process" type="range" max="50" value='0' />
+  <span id="time"></span>
+  <input type="text" id="text" />
 </body>
 
+<script src="./stat.js"></script>
+
 <script type="module">
-  import init from './dist/index.js'
-  init();
+  import Bullet from './dist/index.js'
+  import {rand} from './src/units.js'
+
+  window.bl = new Bullet({
+    el: document.getElementById('app'),
+    width: 800,
+    height: 450
+  })
+
+  const $process = document.getElementById('process')
+  const $time = document.getElementById('time')
+  const $text = document.getElementById('text')
+  window.$time = $time
+  $text.onkeydown = e => {
+    // if (e.keyCode === 13) {
+    //   window.bl.addText({
+    //     text: $text.value || '内容为空'
+    //   })
+    //   e.target.value = ''
+    //   window.bl.curtainRender()
+    // }
+  }
+
+  $process.oninput = e => {
+    const value = e.target.value
+    timeText(value)
+    window.bl.time = value * 1000
+  }
+
+  function timeText (time) {
+    const value = Number(time)
+    const h = parseInt(value / 3600, 10)
+    const m = parseInt((value - h * 3600) / 60, 10)
+    const s = parseInt(value - h * 3600 - m * 60, 10)
+    $time.innerHTML = `当前时间为 ${h}:${m}:${s}, 时间为${value}`
+    return {h, m, s}
+  }
+
+  setTimeout(() => {
+    for(let i = 0; i < 10000; i++) {
+      const time = rand(1000000)
+      window.bl.addText({
+        text: `${(time / 1000) >> 0}测试超级长的代码`,
+        time
+      })
+    }
+
+    setTimeout(() => {
+      // 弹幕添加完毕后 执行渲染弹幕层
+      window.bl.curtainRender()
+    })
+  })
+  
+  setInterval(() => {
+
+  })
+
+  setInterval(() => {
+    $process.value = Number($process.value) + 1
+    timeText(process.value)
+  }, 1000)
+
+  window.bl.render()
+  // window.document.body.append(bl.curtainEl)
 </script>
 </html>
